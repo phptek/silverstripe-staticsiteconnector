@@ -149,6 +149,14 @@ class StaticSiteMOSSURLProcessor extends StaticSiteURLProcessor_DropExtensions i
 		}
 		
 		$url = str_ireplace('/Pages/', '/', $urlData['url']);
+
+		/*
+		 * With MOSS we sometimes see single brackets e.g. http://blah.co/news/cat-stuck-up-tree/(/
+		 * We can "recover" these URLs by stripping and replacing with a trailing slash.
+		 * This allows us to be able to fetch all of its child nodes, if it has any.
+		 */
+		$url = preg_replace("#(\(|%28)/?(.+)?$#", "/$2", $url);
+
 		$urlData = array(
 			'url'	=> $url,
 			'mime'	=> $urlData['mime']

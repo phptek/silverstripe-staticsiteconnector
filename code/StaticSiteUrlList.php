@@ -715,19 +715,6 @@ class StaticSiteCrawler extends PHPCrawler {
 	protected $utils;
 
 	/**
-	 * Set this by using the yml config system
-	 *
-	 * Example:
-	 * <code>
-	 * StaticSiteContentExtractor:
-	 *	log_file:  ../logs/crawler-log.txt
-	 * </code>
-	 *
-	 * @var string
-	 */
-	private static $log_file = null;
-
-	/**
 	 * 
 	 * @param StaticSiteUrlList $urlList
 	 * @param number $limit
@@ -754,23 +741,16 @@ class StaticSiteCrawler extends PHPCrawler {
 	 *	- Pass the preg_replace() call for "fixing" $mossBracketRegex into StaticSiteUrlProcessor#postProcessUrl()
 	 */
 	public function handleDocumentInfo(PHPCrawlerDocumentInfo $info) {
-		/*
-		 * MOSS has many URLs with brackets, e.g. http://www.stuff.co.nz/news/cat-stuck-up-tree/(/
-		 * These result in a 404 returned from curl requests for it, and won't filter down to our caching or URL Processor logic.
-		 * We can "recover" these URLs by stripping and replacing with a trailing slash. This allows us to be able to fetch all its child nodes, if present.
-		 */
-		$mossBracketRegex = "(\(|%28)+(.+)?$";
-		$isRecoverableUrl = preg_match("#$mossBracketRegex#i", $info->url);
 		
 		// Ignore errors and redirects, they'll get logged for later analysis
-		$badStatusCode = (($info->http_status_code < 200) || ($info->http_status_code > 299));
+		$badStatusCode = (($info->http_status_code < 200) || ($info->http_status_code > 302));
 
 		/*
 		 * We're checking for a bad status code AND for "recoverability", becuase we might be able to recover the URL
 		 * when re-requesting it during the import stage, as long as we cache it correctly here.
 		 */		
-		if($badStatusCode && !$isRecoverableUrl) {
-			$message = $info->url . " Skipped. We got a {$info->http_status_code} and URL was irrecoverable" . PHP_EOL;
+		if($badStatusCode) {
+			$message = $info->url . " Skipped. We got a {$info->http_status_code}." . PHP_EOL;
 			$this->utils->log($message);
 			return;
 		}
