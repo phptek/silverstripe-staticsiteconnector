@@ -37,14 +37,24 @@ and importing:
 
         StaticSiteContentExtractor:
             log_file: /var/tmp/crawl-and-import.log
+ 5. If you're importing a MOSS (Microsoft Office Sharepoint Server), adding the following URL exclusion rules under the "Main" tab, may help reduce the amount of scraping the tool needs to do:
+ 
+		/_vti_bin/?
+		/ScriptResource/?
+		/Style%20Library/?
+		/WebResource/?
+		/_layouts/?
+		/http&
+		/https&
+		/mailto&
 
 ## Next Steps
 
 Once the crawling is complete (A message will show in the CMS UI), you'll see all
 the URLs laid out underneath the connector in a tree hierarchy. The URL structure
-(i.e., where the slashes are) is used to build a hierarchy of URLs.
+(where the slashes are) is used to build a hierarchy of URLs.
 
-Now it's time to write some CSS selectors to query different pieces of content for
+Now it's time to write some CSS selectors to exract different pieces of content for
 the import. Go to the Main tab of the connector and click the "Add Schema" button.
 Fill out the fields as follows:
 
