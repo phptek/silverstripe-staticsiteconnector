@@ -10,7 +10,7 @@
  * 
  * @package staticsiteconnector
  * @author Sam Minee <sam@silverstripe.com>
- * @author Science Ninjas <scienceninjas@silverstripe.com>
+ * @author Russell Michell <russell@silverstripe.com>
  * @see {@link StaticSitePageTransformer}
  * @see {@link StaticSiteFileTransformer}
  */

@@ -83,7 +83,8 @@ class StaticSiteContentItem extends ExternalContentItem {
 		}
 		// Log everything that doesn't fit:
 		singleton('StaticSiteUtils')->log('UNKNOWN Schema not configured for Mime & URL:', $this->AbsoluteURL, $this->ProcessedMIME);
-		return $this->default_content_type;
+		// Return something unknown to SilverStripe. The external-content module won't find it and barf on it.
+		return 'unknown';
 	}
 
 	/**
