@@ -7,6 +7,7 @@
 * BUG: Project won't build properly from composer (While it's not on Packagist)
 * BUG: For MOSS sites: Some Urls are cached but not imported.
 * BUG: For MOSS sites: Some Urls are being cached with brackets, even though the MOSS processor rips them out
+* BUG: For MOSS sites: Import fails after several pages. Checking log file, schema $default_applies_to seems to be being used...??
 * BUG: For CWP sites, import and crawl logs may get quite large. Solutions:
  * Disable file-based logging on CWP sites
  * Truncate logs when "clear all import meta-data" is checked in the CMS' UI
